@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
+import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;
 import com.mariano.recetas.service.paso.PasoService;
 
@@ -23,6 +25,14 @@ public class PasoController {
 	@PostMapping("/api/v1/paso")
 	public ResponseEntity<?> createPaso(@RequestBody PasoCreateDto pasoDto){
 		Optional<PasoCreatedDto> pasoCreated = pasoService.createPaso(pasoDto);
+		return ResponseEntity
+				.status(HttpStatus.CREATED)
+				.body(pasoCreated.get());
+	}
+	
+	@PostMapping("/api/v2/paso")
+	public ResponseEntity<?> createPaso(@RequestBody PasoCreateV2Dto pasoDto){
+		Optional<PasoCreatedV2Dto> pasoCreated = pasoService.createPaso(pasoDto);
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
 				.body(pasoCreated.get());

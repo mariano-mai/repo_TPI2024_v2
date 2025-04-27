@@ -1,10 +1,19 @@
 package com.mariano.recetas.mapper.paso.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+import com.mariano.recetas.domain.Ingrediente;
 import com.mariano.recetas.domain.Paso;
+import com.mariano.recetas.dto.ingrediente.IngredienteCreateDto;
+import com.mariano.recetas.dto.ingrediente.IngredienteInfoDto;
+import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
+import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;
+import com.mariano.recetas.mapper.ingrediente.IngredienteMapper;
 import com.mariano.recetas.mapper.paso.PasoMapper;
 import com.mariano.recetas.repository.receta.RecetaRepository;
 
@@ -15,6 +24,7 @@ import lombok.AllArgsConstructor;
 public class PasoMapperImpl implements PasoMapper{
 	
 	private RecetaRepository recetaRepo;
+	private IngredienteMapper ingredienteMapper;
 
 	@Override
 	public Paso pasoCreateDtoToPaso(PasoCreateDto pasoDto) {
@@ -32,6 +42,39 @@ public class PasoMapperImpl implements PasoMapper{
 				paso.getId(), 
 				paso.getDescripcion(), 
 				paso.getReceta().getNombre());
+	}
+
+	@Override
+	public Paso pasoCreateV2DtoToPaso(PasoCreateV2Dto pasoDto) {
+		Paso newPaso = new Paso();
+		newPaso.setReceta(recetaRepo.getReferenceById(pasoDto.idReceta()));
+		newPaso.setDescripcion(pasoDto.descripcion());
+		newPaso.setTiempoEstimado(pasoDto.tiempoEstimado());
+		newPaso.setEsNecesario(pasoDto.esNecesario());
+		newPaso.setIngredientes(listaDeIngredientes(pasoDto.ingredientes()));
+		return newPaso;
+	}
+	
+	private List<Ingrediente> listaDeIngredientes(List<IngredienteCreateDto> ingredientesDto){
+		List<Ingrediente> newList = new ArrayList<>();
+		ingredientesDto.stream()
+			.forEach(ingrediente->newList.add(ingredienteMapper.ingredienteCreateDtoToIngrediente(ingrediente)));
+		return newList;
+	}
+
+	@Override
+	public PasoCreatedV2Dto pasoToPasoCreatedV2Dto(Paso paso) {
+		return new PasoCreatedV2Dto(
+				paso.getId(), 
+				paso.getDescripcion(), 
+				listaDeIngredientesInfoDto(paso.getIngredientes()));
+	}
+	
+	private List<IngredienteInfoDto> listaDeIngredientesInfoDto(List<Ingrediente> ingredientes){
+		List<IngredienteInfoDto> newList = new ArrayList<>();
+		ingredientes.stream()
+			.forEach(ingrediente->newList.add(ingredienteMapper.ingredienteToIngredienteInfoDto(ingrediente)));
+		return newList;
 	}
 
 }

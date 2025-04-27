@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.mariano.recetas.domain.Ingrediente;
 import com.mariano.recetas.dto.ingrediente.IngredienteCreateDto;
 import com.mariano.recetas.dto.ingrediente.IngredienteCreatedDto;
+import com.mariano.recetas.dto.ingrediente.IngredienteInfoDto;
 import com.mariano.recetas.mapper.ingrediente.IngredienteMapper;
 
 @Component
@@ -25,6 +26,14 @@ public class IngredienteMapperImpl implements IngredienteMapper{
 				ingrediente.getId(), 
 				ingrediente.getNombre(), 
 				ingrediente.getDescripcion());
+	}
+
+	@Override
+	public IngredienteInfoDto ingredienteToIngredienteInfoDto(Ingrediente ingrediente) {
+		// TODO Auto-generated method stub
+		return new IngredienteInfoDto(
+				ingrediente.getId(), 
+				ingrediente.getNombre());
 	}
 
 }

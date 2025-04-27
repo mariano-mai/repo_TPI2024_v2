@@ -3,6 +3,7 @@ package com.mariano.recetas.domain;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,7 +33,7 @@ public class Paso {
 	private String descripcion;
 	private Long tiempoEstimado;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL)
 	private List<Ingrediente> ingredientes;
 	private boolean esNecesario;
 

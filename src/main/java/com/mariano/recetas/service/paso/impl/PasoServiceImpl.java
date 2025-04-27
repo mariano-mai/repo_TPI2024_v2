@@ -5,7 +5,9 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.mariano.recetas.domain.Paso;
+import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
+import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;
 import com.mariano.recetas.mapper.paso.PasoMapper;
 import com.mariano.recetas.repository.paso.PasoRepository;
@@ -24,6 +26,12 @@ public class PasoServiceImpl implements PasoService{
 	public Optional<PasoCreatedDto> createPaso(PasoCreateDto pasoDto) {
 		Paso newPaso = pasoMapper.pasoCreateDtoToPaso(pasoDto);
 		return Optional.of(pasoMapper.pasoToPasoCreatedDto(pasoRepo.save(newPaso)));
+	}
+
+	@Override
+	public Optional<PasoCreatedV2Dto> createPaso(PasoCreateV2Dto pasoDto) {
+		Paso newPaso = pasoMapper.pasoCreateV2DtoToPaso(pasoDto);
+		return Optional.of(pasoMapper.pasoToPasoCreatedV2Dto(pasoRepo.save(newPaso)));
 	}
 
 }
