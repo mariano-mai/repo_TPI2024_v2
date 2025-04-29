@@ -1,12 +1,14 @@
 package com.mariano.recetas.service.categoria.impl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.mariano.recetas.domain.Categoria;
 import com.mariano.recetas.dto.categoria.CategoriaCreateDto;
 import com.mariano.recetas.dto.categoria.CategoriaCreatedDto;
+import com.mariano.recetas.dto.categoria.CategoriaRecetasDto;
 import com.mariano.recetas.mapper.categoria.CategoriaMapper;
 import com.mariano.recetas.repository.categoria.CategoriaRepository;
 import com.mariano.recetas.service.categoria.CategoriaService;
@@ -24,6 +26,12 @@ public class CategoriaServiceImpl implements CategoriaService{
 	public Optional<CategoriaCreatedDto> createCategoria(CategoriaCreateDto categoriaDto) {
 		Categoria newCategoria = categoriaMapper.categoriaCreatedDtoToCategoria(categoriaDto);
 		return Optional.of(categoriaMapper.categoriaToCategoriaCreatedDto(categoriaRepo.save(newCategoria)));
+	}
+
+	@Override
+	public Optional<CategoriaRecetasDto> getCategoriaById(UUID id) {
+		Categoria categoria = categoriaRepo.getReferenceById(id);
+		return Optional.of(categoriaMapper.categoriaToCategoriaRecetasDto(categoria));
 	}
 
 }

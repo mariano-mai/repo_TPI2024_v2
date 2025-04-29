@@ -10,10 +10,10 @@ import com.mariano.recetas.domain.Paso;
 import com.mariano.recetas.domain.Receta;
 import com.mariano.recetas.dto.categoria.CategoriaCreatedDto;
 import com.mariano.recetas.dto.paso.PasoRecetaByIdDto;
+import com.mariano.recetas.dto.receta.RecetaByCategoriaDto;
 import com.mariano.recetas.dto.receta.RecetaByIdDto;
 import com.mariano.recetas.dto.receta.RecetaCreateDto;
 import com.mariano.recetas.dto.receta.RecetaCreatedDto;
-import com.mariano.recetas.mapper.categoria.CategoriaMapper;
 import com.mariano.recetas.mapper.paso.PasoMapper;
 import com.mariano.recetas.mapper.receta.RecetaMapper;
 import com.mariano.recetas.repository.categoria.CategoriaRepository;
@@ -25,7 +25,6 @@ import lombok.AllArgsConstructor;
 public class RecetaMapperImpl implements RecetaMapper{
 	
 	private CategoriaRepository categoriaRepo;
-	private CategoriaMapper categoriaMapper;
 	private PasoMapper pasoMapper;
 
 	@Override
@@ -58,14 +57,33 @@ public class RecetaMapperImpl implements RecetaMapper{
 	}
 	
 	private CategoriaCreatedDto addCategoriaDto(Categoria categoria) {
-		CategoriaCreatedDto newCategoria = categoriaMapper.categoriaToCategoriaCreatedDto(categoria);
-		return newCategoria;
+		return new CategoriaCreatedDto(
+				categoria.getId(), 
+				categoria.getNombre());
 	}
 	
 	private List<PasoRecetaByIdDto> listaDePasoInfoDto(List<Paso> pasos){
 		List<PasoRecetaByIdDto> newList = new ArrayList<>();
 		pasos.stream().forEach(paso->newList.add(pasoMapper.pasoToPasoRecetaByIdDto(paso)));
 		return newList;
+	}
+
+	@Override
+	public RecetaByCategoriaDto recetaToRecetaByCategoriaDto(Receta receta) {
+		return new RecetaByCategoriaDto(
+				receta.getId(), 
+				receta.getNombre(), 
+				receta.getDificultad(), 
+				receta.getDescripcion(), 
+				tiempoNecesario(receta.getPasos()));
+	}
+	
+	private Long tiempoNecesario(List<Paso> pasos) {
+		Long tiempo = 0L;
+		for(Paso paso : pasos) {
+			tiempo = paso.isEsNecesario() ? tiempo+paso.getTiempoEstimado():tiempo+0;
+		}
+		return tiempo;
 	}
 
 }
