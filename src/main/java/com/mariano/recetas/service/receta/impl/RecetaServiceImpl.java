@@ -1,10 +1,12 @@
 package com.mariano.recetas.service.receta.impl;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 
 import com.mariano.recetas.domain.Receta;
+import com.mariano.recetas.dto.receta.RecetaByIdDto;
 import com.mariano.recetas.dto.receta.RecetaCreateDto;
 import com.mariano.recetas.dto.receta.RecetaCreatedDto;
 import com.mariano.recetas.mapper.receta.RecetaMapper;
@@ -24,6 +26,12 @@ public class RecetaServiceImpl implements RecetaService{
 	public Optional<RecetaCreatedDto> createReceta(RecetaCreateDto recetaDto) {
 		Receta newReceta = recetaMapper.recetaCreateDtoToReceta(recetaDto);
 		return Optional.of(recetaMapper.recetaToRecetaCreatedDto(recetaRepo.save(newReceta)));
+	}
+
+	@Override
+	public Optional<RecetaByIdDto> getRecetaById(UUID id) {
+		Receta newReceta = recetaRepo.getReferenceById(id);
+		return Optional.of(recetaMapper.recetaToRecetaByIdDto(newReceta));
 	}
 
 }

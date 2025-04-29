@@ -13,6 +13,7 @@ import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
 import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;
+import com.mariano.recetas.dto.paso.PasoRecetaByIdDto;
 import com.mariano.recetas.mapper.ingrediente.IngredienteMapper;
 import com.mariano.recetas.mapper.paso.PasoMapper;
 import com.mariano.recetas.repository.receta.RecetaRepository;
@@ -75,6 +76,14 @@ public class PasoMapperImpl implements PasoMapper{
 		ingredientes.stream()
 			.forEach(ingrediente->newList.add(ingredienteMapper.ingredienteToIngredienteInfoDto(ingrediente)));
 		return newList;
+	}
+
+	@Override
+	public PasoRecetaByIdDto pasoToPasoRecetaByIdDto(Paso paso) {
+		return new PasoRecetaByIdDto(
+				paso.getId(), 
+				paso.getTiempoEstimado(), 
+				listaDeIngredientesInfoDto(paso.getIngredientes()));
 	}
 
 }
