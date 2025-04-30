@@ -8,5 +8,7 @@ import com.mariano.recetas.dto.ingrediente.IngredienteCreatedDto;
 public interface IngredienteService {
 	
 	Optional<IngredienteCreatedDto> createIngredient(IngredienteCreateDto ingredienteCreateDto);
+	
+	Optional<IngredienteCreatedDto> getIngredienteById(Long id);
 
 }

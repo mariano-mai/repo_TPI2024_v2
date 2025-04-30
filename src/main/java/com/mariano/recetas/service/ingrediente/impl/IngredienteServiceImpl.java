@@ -26,4 +26,10 @@ public class IngredienteServiceImpl implements IngredienteService{
 		return Optional.of(ingredienteMapper.ingredienteToIngredienteCreatedDto(ingredienteRepo.save(newIngrediente)));
 	}
 
+	@Override
+	public Optional<IngredienteCreatedDto> getIngredienteById(Long id) {
+		Ingrediente ingrediente = ingredienteRepo.getReferenceById(id);
+		return Optional.of(ingredienteMapper.ingredienteToIngredienteCreatedDto(ingrediente));
+	}
+
 }
