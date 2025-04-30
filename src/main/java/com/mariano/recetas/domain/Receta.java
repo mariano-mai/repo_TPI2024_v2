@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.mariano.recetas.enumerators.EnumDificultad;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -31,7 +32,7 @@ public class Receta {
 	private UUID id;
 	private String nombre;
 	
-	@OneToMany(mappedBy = "receta")
+	@OneToMany(mappedBy = "receta", cascade = CascadeType.ALL)
 	private List<Paso> pasos;
 	
 	@Enumerated(EnumType.STRING)

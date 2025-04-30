@@ -34,4 +34,14 @@ public class RecetaServiceImpl implements RecetaService{
 		return Optional.of(recetaMapper.recetaToRecetaByIdDto(newReceta));
 	}
 
+	@Override
+	public boolean deleteReceta(UUID id) {
+		Optional<Receta> receta = recetaRepo.findById(id);
+		if(receta.isPresent()) {
+			recetaRepo.delete(receta.get());
+			return true;
+		}
+		return false;
+	}
+
 }

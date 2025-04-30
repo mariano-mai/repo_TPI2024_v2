@@ -12,5 +12,7 @@ public interface RecetaService {
 	Optional<RecetaCreatedDto> createReceta(RecetaCreateDto recetaDto);
 	
 	Optional<RecetaByIdDto> getRecetaById(UUID id);
+	
+	boolean deleteReceta(UUID id);
 
 }
