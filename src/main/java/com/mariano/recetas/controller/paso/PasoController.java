@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
+import com.mariano.recetas.dto.paso.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
 import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;

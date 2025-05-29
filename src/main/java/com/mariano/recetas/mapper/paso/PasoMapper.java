@@ -1,7 +1,7 @@
 package com.mariano.recetas.mapper.paso;
 
 import com.mariano.recetas.domain.Paso;
-import com.mariano.recetas.dto.ingrediente.PasoCreatedV2Dto;
+import com.mariano.recetas.dto.paso.PasoCreatedV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreateDto;
 import com.mariano.recetas.dto.paso.PasoCreateV2Dto;
 import com.mariano.recetas.dto.paso.PasoCreatedDto;
